@@ -5,32 +5,36 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-      contents: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        with:
-          enablement: true
-
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: '.'
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages Branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          # Create gh-pages branch if it doesn't exist
+          if ! git rev-parse -q --verify origin/gh-pages; then
+            git checkout --orphan gh-pages
+            git rm -rf .
+          else
+            git checkout gh-pages
+          fi
+          
+          # Copy files from main branch
+          git checkout main -- .
+          
+          # Remove unnecessary files for Pages
+          rm -f .gitignore .github .git
+          
+          # Commit and push
+          git add -A
+          git commit -m "Automated deployment to GitHub Pages from main branch" || true
+          git push -u origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

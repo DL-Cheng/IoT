@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>靜電場強度量測系統 - 模擬模式</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="config.js"></script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="title">
+            <span class="icon">⚡</span>
+            靜電場強度量測系統
+            <span class="icon">⚡</span>
+        </h1>
+        <p class="subtitle">實時監測靜電場環境參數 (模擬模式)</p>
+    </header>
+
+    <main class="container">
+        <!-- Top Status Section -->
+        <section class="status-section">
+            <div class="status-item">
+                <label>連接狀態</label>
+                <div class="status-indicator">
+                    <span id="connection-status" class="indicator online">模擬中</span>
+                </div>
+            </div>
+            <div class="status-item">
+                <label>數據更新時間</label>
+                <p id="last-update">--:--:--</p>
+            </div>
+            <div class="status-item">
+                <label>採樣速率</label>
+                <p id="sample-rate">-- Hz</p>
+            </div>
+        </section>
+
+        <!-- Main Data Display -->
+        <section class="data-display-section">
+            <div class="data-box main-data">
+                <div class="data-header">
+                    <h2>靜電場強度</h2>
+                    <span class="unit">V/m</span>
+                </div>
+                <div class="data-value">
+                    <span id="field-strength" class="value">0.00</span>
+                    <span class="decimal-unit">V/m</span>
+                </div>
+                <div class="data-sub-info">
+                    <span>原始電壓: <span id="raw-voltage">0.00</span> V</span>
+                </div>
+            </div>
+
+            <!-- Side Measurements -->
+            <div class="side-measurements">
+                <div class="data-box small-data">
+                    <h3>最小值</h3>
+                    <p id="min-value" class="value-small">0.00</p>
+                    <p class="unit-small">V/m</p>
+                </div>
+                <div class="data-box small-data">
+                    <h3>最大值</h3>
+                    <p id="max-value" class="value-small">0.00</p>
+                    <p class="unit-small">V/m</p>
+                </div>
+                <div class="data-box small-data">
+                    <h3>平均值</h3>
+                    <p id="avg-value" class="value-small">0.00</p>
+                    <p class="unit-small">V/m</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Section -->
+        <section class="chart-section">
+            <div class="chart-container">
+                <h2 class="chart-title">靜電場強度時間序列</h2>
+                <canvas id="fieldStrengthChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Statistics Table -->
+        <section class="stats-section">
+            <h2>量測統計資訊</h2>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>參數</th>
+                        <th>數值</th>
+                        <th>單位</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>當前強度</td>
+                        <td id="stat-current">0.00</td>
+                        <td>V/m</td>
+                    </tr>
+                    <tr>
+                        <td>峰值</td>
+                        <td id="stat-peak">0.00</td>
+                        <td>V/m</td>
+                    </tr>
+                    <tr>
+                        <td>最小值</td>
+                        <td id="stat-min">0.00</td>
+                        <td>V/m</td>
+                    </tr>
+                    <tr>
+                        <td>平均值</td>
+                        <td id="stat-avg">0.00</td>
+                        <td>V/m</td>
+                    </tr>
+                    <tr>
+                        <td>標準差</td>
+                        <td id="stat-std">0.00</td>
+                        <td>V/m</td>
+                    </tr>
+                    <tr>
+                        <td>數據點數</td>
+                        <td id="stat-count">0</td>
+                        <td>個</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Control Panel -->
+        <section class="control-section">
+            <button id="clear-btn" class="control-btn">清除數據</button>
+            <button id="export-btn" class="control-btn">導出數據</button>
+            <div class="connection-controls">
+                <button id="simulation-toggle" class="control-btn primary">停止模擬</button>
+                <select id="simulation-mode" class="input-field">
+                    <option value="sine">正弦波</option>
+                    <option value="noise">隨機噪聲</option>
+                    <option value="spike">脈衝</option>
+                    <option value="mixed">混合</option>
+                </select>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>國科會科普實作計畫補助 | 模擬測試模式</p>
+    </footer>
+
+    <script src="simulation.js"></script>
+</body>
+
+</html>

@@ -12,29 +12,38 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Deploy to GitHub Pages Branch
         run: |
+          # Configure git
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           
-          # Create gh-pages branch if it doesn't exist
-          if ! git rev-parse -q --verify origin/gh-pages; then
+          # Create and switch to gh-pages branch
+          if git rev-parse --verify origin/gh-pages 2>/dev/null; then
+            git checkout gh-pages
+            git reset --hard origin/gh-pages
+          else
             git checkout --orphan gh-pages
             git rm -rf .
-          else
-            git checkout gh-pages
           fi
           
-          # Copy files from main branch
-          git checkout main -- .
+          # Get all files from main branch  
+          git checkout main -- . || true
           
-          # Remove unnecessary files for Pages
-          rm -rf .git .github .gitignore
+          # Remove files that shouldn't be on Pages
+          rm -f .gitignore
+          rm -rf .github
           
-          # Commit and push
+          # Add all files for Pages
           git add -A
-          git commit -m "Automated deployment to GitHub Pages from main branch" || true
-          git push -u origin gh-pages
+          
+          # Commit
+          git commit -m "Automated deployment to GitHub Pages" --allow-empty
+          
+          # Force push to gh-pages
+          git push -u origin gh-pages --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

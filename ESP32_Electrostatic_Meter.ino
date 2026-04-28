@@ -30,7 +30,7 @@ const char* WIFI_SSID = "YOUR_SSID";              // 更改為您的WiFi名稱
 const char* WIFI_PASSWORD = "YOUR_PASSWORD";      // 更改為您的WiFi密碼
 
 // MQTT 設置
-const char* MQTT_SERVER = "broker.mqttgo.io";
+const char* MQTT_SERVER = "broker.emqx.io";
 const int MQTT_PORT = 1883;
 const char* MQTT_CLIENT_ID = "esp32_field_meter";
 const char* MQTT_TOPIC = "iot/electrostatic/field";

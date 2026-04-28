@@ -229,7 +229,7 @@ CALIBRATION: {
 2. 確保 WiFi 已連接
 3. 檢查防火牆設置
 4. 嘗試使用不同的 MQTT Broker
-5. 檢查網絡延遲 (某些地區可能無法訪問 broker.mqttgo.io)
+5. 檢查網絡延遲 (某些地區可能無法訪問 broker.emqx.io)
 
 ### 問題 4：網頁無法接收數據
 
@@ -280,7 +280,7 @@ CALIBRATION: {
 
 使用 `mosquitto_sub` 檢查數據：
 ```bash
-mosquitto_sub -h broker.mqttgo.io -t "iot/electrostatic/field"
+mosquitto_sub -h broker.emqx.io -t "iot/electrostatic/field"
 ```
 
 ---

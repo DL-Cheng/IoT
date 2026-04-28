@@ -252,12 +252,12 @@ function updateSampleRate() {
 
 // MQTT Connection
 function connectMQTT() {
-    const broker = brokerInput.value || 'broker.mqttgo.io';
-    const topic = topicInput.value || 'iot/electrostatic/field';
+    const broker = brokerInput.value || CONFIG.MQTT.server;
+    const topic = topicInput.value || CONFIG.MQTT.topic;
 
-    // Use mqtt over WebSocket
-    const clientId = 'iot-field-meter-' + Math.random().toString(36).substr(2, 9);
-    const connectUrl = `wss://${broker}:8084/mqtt`;
+    // Use mqtt over WebSocket / secure connection
+    const clientId = CONFIG.MQTT.clientIdPrefix + '-' + Math.random().toString(36).substr(2, 9);
+    const connectUrl = `wss://${broker}:${CONFIG.MQTT.port}/mqtt`;
 
     console.log('Connecting to:', connectUrl);
     console.log('Topic:', topic);

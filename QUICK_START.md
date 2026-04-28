@@ -55,7 +55,7 @@ IoT/
    - 在瀏覽器中打開 `index.html`
 
 2. **連接到 MQTT**
-   - Broker地址: `broker.mqttgo.io` (預設)
+   - Broker地址: `broker.emqx.io` (預設)
    - Topic: `iot/electrostatic/field` (預設)
    - 點擊 "連接" 按鈕
 
@@ -100,7 +100,7 @@ IoT/
                     [WiFi]
                         |
                   [MQTT Broker]
-                   mqttgo.io
+                   broker.emqx.io
                         |
                    [WebSocket]
                         |
@@ -223,7 +223,7 @@ docker run -d -p 8080:80 -v /path/to/IoT:/usr/share/nginx/html nginx
 2. **檢查連接**
    ```bash
    # 測試 MQTT 連接
-   mqtt_sub -h broker.mqttgo.io -t "iot/electrostatic/field"
+   mqtt_sub -h broker.emqx.io -t "iot/electrostatic/field"
    ```
 
 3. **驗證硬件**

@@ -17,7 +17,7 @@
 ```
 ESP32 (模擬傳感器) 
     ↓
-MQTT Broker (mqttgo.io)
+MQTT Broker (broker.emqx.io)
     ↓
 網頁面板 (實時展示)
 ```
@@ -31,7 +31,7 @@ MQTT Broker (mqttgo.io)
 ## 軟件要求
 
 - 任何現代瀏覽器 (Chrome, Firefox, Safari, Edge)
-- MQTT Broker (推薦使用 mqttgo.io)
+- MQTT Broker (推薦使用 broker.emqx.io)
 
 ## 快速開始
 
@@ -52,8 +52,8 @@ const char* ssid = "YOUR_SSID";
 const char* password = "YOUR_PASSWORD";
 
 // MQTT設置
-const char* mqtt_server = "broker.mqttgo.io";
-const int mqtt_port = 1883;
+const char* mqtt_server = "broker.emqx.io";
+const int mqtt_port = 8883;
 const char* mqtt_topic = "iot/electrostatic/field";
 const char* client_id = "esp32_field_meter";
 
@@ -156,7 +156,7 @@ const CALIBRATION = {
 
 ### 連接到MQTT Broker
 
-1. 在"Broker地址"欄輸入MQTT Broker的地址 (預設: broker.mqttgo.io)
+1. 在"Broker地址"欄輸入MQTT Broker的地址 (預設: broker.emqx.io)
 2. 在"MQTT Topic"欄輸入主題 (預設: iot/electrostatic/field)
 3. 點擊"連接"按鈕
 

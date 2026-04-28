@@ -20,6 +20,7 @@
  */
 
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
@@ -31,7 +32,7 @@ const char* WIFI_PASSWORD = "YOUR_PASSWORD";      // 更改為您的WiFi密碼
 
 // MQTT 設置
 const char* MQTT_SERVER = "broker.emqx.io";
-const int MQTT_PORT = 1883;
+const int MQTT_PORT = 8883;
 const char* MQTT_CLIENT_ID = "esp32_field_meter";
 const char* MQTT_TOPIC = "iot/electrostatic/field";
 const char* MQTT_PUBLISH_INTERVAL = 1000;         // 發送間隔 (毫秒)
@@ -44,7 +45,7 @@ const int SAMPLE_COUNT = 10;                      // 每次發送前平均採樣
 
 // ==================== 全局變量 ====================
 
-WiFiClient espClient;
+WiFiClientSecure espClient;
 PubSubClient mqttClient(espClient);
 unsigned long lastSendTime = 0;
 bool isWiFiConnected = false;
@@ -69,7 +70,8 @@ void setup() {
     // 連接WiFi
     connectToWiFi();
     
-    // 配置MQTT
+    // 使用 TLS 連接 MQTT Broker
+    espClient.setInsecure();
     mqttClient.setServer(MQTT_SERVER, MQTT_PORT);
     mqttClient.setCallback(onMQTTMessage);
     

@@ -8,8 +8,8 @@
 const CONFIG = {
     MQTT: {
         // MQTT Broker 設置
-        server: "broker.mqttgo.io",       // MQTT Broker 地址
-        port: 8084,                        // WebSocket 埠 (一般為 8084)
+        server: "broker.emqx.io",        // MQTT Broker 地址
+        port: 8883,                       // MQTT TLS 埠 (一般為 8883)
         topic: "iot/electrostatic/field",  // 發布主題
         clientIdPrefix: "iot-field-meter", // 客戶端ID前綴
         reconnectTimeout: 4000,            // 重新連接超時時間

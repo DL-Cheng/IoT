@@ -1,5 +1,5 @@
 // MQTT Configuration
-let mqtt = null;
+let mqttClient = null;
 let isConnected = false;
 const dataPoints = [];
 const maxDataPoints = CONFIG.CHART.maxDataPoints; // 5 minutes at 1Hz sampling rate
@@ -262,18 +262,18 @@ function connectMQTT() {
     console.log('Connecting to:', connectUrl);
     console.log('Topic:', topic);
 
-    mqtt = mqtt_connect(connectUrl, {
+    mqttClient = mqtt_connect(connectUrl, {
         clientId: clientId,
         clean: true,
         connectTimeout: 4000,
         reconnectPeriod: 4000,
     });
 
-    mqtt.on('connect', () => {
+    mqttClient.on('connect', () => {
         console.log('MQTT Connected');
         isConnected = true;
         updateConnectionStatus(true);
-        mqtt.subscribe(topic, { qos: 0 }, (err) => {
+        mqttClient.subscribe(topic, { qos: 0 }, (err) => {
             if (err) {
                 console.error('Subscribe error:', err);
             } else {
@@ -282,7 +282,7 @@ function connectMQTT() {
         });
     });
 
-    mqtt.on('message', (receivedTopic, payload) => {
+    mqttClient.on('message', (receivedTopic, payload) => {
         try {
             const message = payload.toString();
             console.log('Received:', message, 'from topic:', receivedTopic);
@@ -304,19 +304,19 @@ function connectMQTT() {
         }
     });
 
-    mqtt.on('error', (error) => {
+    mqttClient.on('error', (error) => {
         console.error('MQTT Error:', error);
         isConnected = false;
         updateConnectionStatus(false);
     });
 
-    mqtt.on('close', () => {
+    mqttClient.on('close', () => {
         console.log('MQTT Disconnected');
         isConnected = false;
         updateConnectionStatus(false);
     });
 
-    mqtt.on('offline', () => {
+    mqttClient.on('offline', () => {
         console.log('MQTT Offline');
         isConnected = false;
         updateConnectionStatus(false);
@@ -338,9 +338,9 @@ function updateConnectionStatus(connected) {
 
 // Disconnect MQTT
 function disconnectMQTT() {
-    if (mqtt) {
-        mqtt.end();
-        mqtt = null;
+    if (mqttClient) {
+        mqttClient.end();
+        mqttClient = null;
         isConnected = false;
         updateConnectionStatus(false);
     }
@@ -428,7 +428,7 @@ function enableSimulationMode() {
 // Function to connect using MQTT.js library (fallback to paho-mqtt if available)
 // This uses the mqtt.js library bundled with the page
 function mqtt_connect(url, options) {
-    return mqtt.connect(url, options);
+    return window.mqtt.connect(url, options);
 }
 
 // Initialize on page load

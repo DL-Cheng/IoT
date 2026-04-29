@@ -484,6 +484,12 @@ canvas {
     box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
 }
 
+.indicator.connecting {
+    background: linear-gradient(135deg, #ffaa00, #ffd700);
+    color: #111111;
+    box-shadow: 0 0 12px rgba(255, 170, 0, 0.6);
+}
+
 .connection-controls {
     display: flex;
     gap: 1rem;

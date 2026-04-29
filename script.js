@@ -259,8 +259,10 @@ function connectMQTT() {
     const clientId = CONFIG.MQTT.clientIdPrefix + '-' + Math.random().toString(36).substr(2, 9);
     const connectUrl = `wss://${broker}:${CONFIG.MQTT.port}/mqtt`;
 
+    console.log('Connect button clicked');
     console.log('Connecting to:', connectUrl);
     console.log('Topic:', topic);
+    setConnectingStatus();
 
     mqttClient = mqtt_connect(connectUrl, {
         clientId: clientId,
@@ -324,6 +326,12 @@ function connectMQTT() {
 }
 
 // Update connection status
+function setConnectingStatus() {
+    connectionStatus.textContent = '連線中...';
+    connectionStatus.className = 'indicator connecting';
+    connectBtn.textContent = '連線中';
+}
+
 function updateConnectionStatus(connected) {
     if (connected) {
         connectionStatus.textContent = '連線中';
